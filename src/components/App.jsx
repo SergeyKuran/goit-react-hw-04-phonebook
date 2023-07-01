@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 // Імпорт компонентів
 import ContactForm from './ContactForm';
@@ -11,6 +12,18 @@ import css from '../components/App.module.css';
 const App = () => {
   const [contacts, setContacts] = useState([]);
   const [filter, setFilter] = useState('');
+
+  useEffect(() => {
+    const getData = localStorage.getItem('contacts');
+    const dataParse = JSON.parse(getData);
+    if (dataParse) {
+      setContacts(dataParse);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
   // // Метод виделення об'єкта з масиву
   const deleteObject = id => {

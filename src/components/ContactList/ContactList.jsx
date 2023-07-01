@@ -6,7 +6,6 @@ import css from '../ContactList/ContactList.module.css';
 
 // Компонеет для рендеру списку контактів
 const ContactList = ({ contacts, filter, deleteObject }) => {
-  console.log(contacts);
   return (
     <div>
       <ul className={css.ul}>

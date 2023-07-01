@@ -31,12 +31,6 @@ const ContactForm = ({ onSubmit }) => {
   const handleSubmit = evt => {
     evt.preventDefault();
 
-    const { value } = evt.target;
-
-    // Передача данних
-    setName(value);
-    setNumber(value);
-
     //Передача об'єкта у пропси у головний компонент
     onSubmit({
       id: nanoid(),
