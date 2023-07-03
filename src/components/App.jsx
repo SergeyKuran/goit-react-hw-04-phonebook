@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import Notiflix from 'notiflix';
 
 // Імпорт компонентів
 import ContactForm from './ContactForm';
@@ -22,12 +22,17 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    if (contacts.length === 0) {
+      return;
+    }
+
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
   // // Метод виделення об'єкта з масиву
   const deleteObject = id => {
     setContacts(prevContacts => prevContacts.filter(el => el.id !== id));
+    Notiflix.Notify.success('Operation success!');
   };
 
   // Метод добавлення об'єкта у масив
@@ -38,9 +43,10 @@ const App = () => {
     );
 
     if (find) {
-      return alert(`${obj.name} is already in contacts`);
+      return Notiflix.Notify.warning(`${obj.name} is already in contacts`);
     }
     setContacts(prevContacts => [...prevContacts, obj]);
+    Notiflix.Notify.success('Operation success!');
   };
 
   // Метод стягування данних при пошуку
@@ -52,11 +58,9 @@ const App = () => {
         <h2>Phonebook</h2>
         <ContactForm onSubmit={addObject} />
       </div>
-
       <div className={css.contacts}>
         <h3>Contacts</h3>
         <Filter filter={filter} onChange={onChange} />
-
         <ContactList
           contacts={contacts}
           filter={filter}
